@@ -35,7 +35,6 @@ namespace MultiQueueModels
         private List<int> waitingQueue = new List<int>();
         public int endTime;
         public List<List<int>> serverBusyTime = new List<List<int>>();
-        int queueLength = 0;
 
         public void Simulate() {
             for(int i = 0; i < NumberOfServers; i++) {
@@ -89,7 +88,7 @@ namespace MultiQueueModels
         public void Prepare_Customers() {
             int lastArrival = 0;
 
-            for (int i = 1; i <= 100; i++) {
+            for (int i = 1; i <= maxCustomers; i++) {
                 MultiQueueModels.SimulationCase simCase = new MultiQueueModels.SimulationCase();
                 simCase.CustomerNumber = i;
 
@@ -174,7 +173,6 @@ namespace MultiQueueModels
         }
 
         public void Serve_Random() {
-            int maxCustomers = 100;
             if (StoppingCriteria == MultiQueueModels.Enums.StoppingCriteria.NumberOfCustomers)
                 maxCustomers = StoppingNumber;
             for (int i = 0; i < maxCustomers; i++) {
