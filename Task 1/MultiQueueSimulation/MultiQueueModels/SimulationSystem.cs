@@ -29,12 +29,13 @@ namespace MultiQueueModels
         public List<SimulationCase> SimulationTable { get; set; }
         public PerformanceMeasures PerformanceMeasures { get; set; }
 
-        private Random rnd = new Random();
         public int maxCustomers;
-        private int maxQueueLength = 0;
-        private List<int> waitingQueue = new List<int>();
         public int endTime;
         public List<List<int>> serverBusyTime = new List<List<int>>();
+
+        private Random rnd = new Random();
+        private int maxQueueLength = 0;
+        private List<int> waitingQueue = new List<int>();
 
         public void Simulate() {
             for(int i = 0; i < NumberOfServers; i++) {
@@ -45,6 +46,8 @@ namespace MultiQueueModels
                 Serve_Priority();
             else if (SelectionMethod == MultiQueueModels.Enums.SelectionMethod.Random)
                 Serve_Random();
+            else if (SelectionMethod == MultiQueueModels.Enums.SelectionMethod.LeastUtilization)
+                Serve_LU();
 
             // Calculating average waiting time
             int totalWait = 0;
@@ -85,7 +88,7 @@ namespace MultiQueueModels
             }
         }
 
-        public void Prepare_Customers() {
+        private void Prepare_Customers() {
             int lastArrival = 0;
 
             for (int i = 1; i <= maxCustomers; i++) {
@@ -119,7 +122,7 @@ namespace MultiQueueModels
             }
         }
 
-        public void Serve_Priority() {
+        private void Serve_Priority() {
             for (int i = 0; i < maxCustomers; i++) {
                 if (StoppingCriteria == MultiQueueModels.Enums.StoppingCriteria.SimulationEndTime) {
                     if (SimulationTable[i].ArrivalTime >= StoppingNumber) {
@@ -172,7 +175,7 @@ namespace MultiQueueModels
             }
         }
 
-        public void Serve_Random() {
+        private void Serve_Random() {
             if (StoppingCriteria == MultiQueueModels.Enums.StoppingCriteria.NumberOfCustomers)
                 maxCustomers = StoppingNumber;
             for (int i = 0; i < maxCustomers; i++) {
@@ -211,6 +214,65 @@ namespace MultiQueueModels
                     }
                 }
                 if (!assigned && trials == NumberOfServers) {
+                    SimulationTable[i].TimeInQueue++;
+
+                    bool found = false;
+                    for (int w = 0; w < waitingQueue.Count; w++) {
+                        if (waitingQueue[w] == i) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        waitingQueue.Add(i);
+                    }
+
+                    i--;
+                }
+            }
+        }
+
+        private void Serve_LU() {
+            for (int i = 0; i < maxCustomers; i++) {
+                if (StoppingCriteria == MultiQueueModels.Enums.StoppingCriteria.SimulationEndTime) {
+                    if (SimulationTable[i].ArrivalTime >= StoppingNumber) {
+                        break;
+                    }
+                }
+                bool assigned = false;
+                int leastUsedServer = -1, minUtilization = 10000000;
+                for (int j = 0; j < NumberOfServers; j++) {
+                    if (Servers[j].TotalWorkingTime < minUtilization &&
+                        Servers[j].FinishTime <= SimulationTable[i].ArrivalTime + SimulationTable[i].TimeInQueue) {
+                        leastUsedServer = j;
+                        minUtilization = Servers[j].TotalWorkingTime;
+                        break;
+                    }
+                }
+                if(leastUsedServer != -1) {
+                    SimulationTable[i].AssignedServer = Servers[leastUsedServer];
+                    Servers[leastUsedServer].NumberOfCustomers++;
+                    assigned = true;
+                    for (int k = 0; k < Servers[leastUsedServer].TimeDistribution.Count; k++) {
+                        int minRange = Servers[leastUsedServer].TimeDistribution[k].MinRange;
+                        int maxRange = Servers[leastUsedServer].TimeDistribution[k].MaxRange;
+                        if (SimulationTable[i].RandomService >= minRange &&
+                            SimulationTable[i].RandomService <= maxRange) {
+                            SimulationTable[i].ServiceTime = Servers[leastUsedServer].TimeDistribution[k].Time;
+                            break;
+                        }
+                    }
+                    SimulationTable[i].StartTime = SimulationTable[i].ArrivalTime + SimulationTable[i].TimeInQueue;
+                    Servers[leastUsedServer].FinishTime = SimulationTable[i].StartTime + SimulationTable[i].ServiceTime;
+                    SimulationTable[i].EndTime = Servers[leastUsedServer].FinishTime;
+
+                    Servers[leastUsedServer].TotalWorkingTime += SimulationTable[i].ServiceTime;
+
+                    for (int t = SimulationTable[i].StartTime; t <= SimulationTable[i].EndTime; t++) {
+                        serverBusyTime[leastUsedServer].Add(t);
+                    }
+                }
+                if (!assigned) {
                     SimulationTable[i].TimeInQueue++;
 
                     bool found = false;

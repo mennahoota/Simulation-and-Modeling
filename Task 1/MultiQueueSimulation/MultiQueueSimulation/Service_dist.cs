@@ -46,7 +46,7 @@ namespace MultiQueueSimulation
 
                 decimal minRange;
                 if (r == 0)
-                    minRange = 0;
+                    minRange = 1;
                 else
                     minRange = cum_prob * 100 + 1; // minRange = old cum + 1
                 ts.MinRange = decimal.ToInt32(minRange);

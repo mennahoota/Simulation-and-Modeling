@@ -15,7 +15,8 @@ namespace MultiQueueSimulation {
         }
 
         private void Output_Load(object sender, EventArgs e) {
-            Program.system.Simulate();
+            if(Program.system.endTime == 0)
+                Program.system.Simulate();
 
             dg_output.DataSource = Program.system.SimulationTable;
             dg_output.Show();

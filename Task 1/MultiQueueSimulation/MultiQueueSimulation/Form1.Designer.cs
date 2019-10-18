@@ -44,7 +44,7 @@
             // 
             // txt_num_servers
             // 
-            this.txt_num_servers.Location = new System.Drawing.Point(202, 76);
+            this.txt_num_servers.Location = new System.Drawing.Point(285, 66);
             this.txt_num_servers.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txt_num_servers.Name = "txt_num_servers";
             this.txt_num_servers.Size = new System.Drawing.Size(116, 24);
@@ -52,7 +52,7 @@
             // 
             // btn_service
             // 
-            this.btn_service.Location = new System.Drawing.Point(70, 324);
+            this.btn_service.Location = new System.Drawing.Point(204, 346);
             this.btn_service.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btn_service.Name = "btn_service";
             this.btn_service.Size = new System.Drawing.Size(140, 47);
@@ -63,7 +63,7 @@
             // 
             // btn_Inter_Arrival
             // 
-            this.btn_Inter_Arrival.Location = new System.Drawing.Point(273, 324);
+            this.btn_Inter_Arrival.Location = new System.Drawing.Point(204, 291);
             this.btn_Inter_Arrival.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btn_Inter_Arrival.Name = "btn_Inter_Arrival";
             this.btn_Inter_Arrival.Size = new System.Drawing.Size(140, 47);
@@ -74,7 +74,7 @@
             // 
             // btn_Done
             // 
-            this.btn_Done.Location = new System.Drawing.Point(421, 30);
+            this.btn_Done.Location = new System.Drawing.Point(421, 291);
             this.btn_Done.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btn_Done.Name = "btn_Done";
             this.btn_Done.Size = new System.Drawing.Size(140, 47);
@@ -86,7 +86,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(51, 80);
+            this.label1.Location = new System.Drawing.Point(139, 73);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(123, 17);
             this.label1.TabIndex = 4;
@@ -95,24 +95,24 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(70, 156);
+            this.label2.Location = new System.Drawing.Point(139, 238);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(54, 17);
+            this.label2.Size = new System.Drawing.Size(112, 17);
             this.label2.TabIndex = 5;
-            this.label2.Text = "Method";
+            this.label2.Text = "Selection Method";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(51, 210);
+            this.label3.Location = new System.Drawing.Point(139, 182);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(125, 17);
+            this.label3.Size = new System.Drawing.Size(109, 17);
             this.label3.TabIndex = 6;
-            this.label3.Text = "Stopping Condition";
+            this.label3.Text = "Stopping Criteria";
             // 
             // txt_stop
             // 
-            this.txt_stop.Location = new System.Drawing.Point(202, 203);
+            this.txt_stop.Location = new System.Drawing.Point(285, 179);
             this.txt_stop.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txt_stop.Name = "txt_stop";
             this.txt_stop.Size = new System.Drawing.Size(116, 24);
@@ -120,7 +120,7 @@
             // 
             // txt_method
             // 
-            this.txt_method.Location = new System.Drawing.Point(202, 149);
+            this.txt_method.Location = new System.Drawing.Point(285, 235);
             this.txt_method.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txt_method.Name = "txt_method";
             this.txt_method.Size = new System.Drawing.Size(116, 24);
@@ -128,7 +128,7 @@
             // 
             // txt_stop_num
             // 
-            this.txt_stop_num.Location = new System.Drawing.Point(202, 259);
+            this.txt_stop_num.Location = new System.Drawing.Point(285, 118);
             this.txt_stop_num.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txt_stop_num.Name = "txt_stop_num";
             this.txt_stop_num.Size = new System.Drawing.Size(116, 24);
@@ -137,7 +137,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(51, 266);
+            this.label4.Location = new System.Drawing.Point(139, 121);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(116, 17);
             this.label4.TabIndex = 11;
@@ -145,7 +145,7 @@
             // 
             // btn_charts
             // 
-            this.btn_charts.Location = new System.Drawing.Point(421, 137);
+            this.btn_charts.Location = new System.Drawing.Point(421, 346);
             this.btn_charts.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btn_charts.Name = "btn_charts";
             this.btn_charts.Size = new System.Drawing.Size(140, 47);
