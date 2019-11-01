@@ -94,6 +94,7 @@
             this.Controls.Add(this.dgv_simulationTable);
             this.Name = "SimulationTable";
             this.Text = "SimulationTable";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SimulationTable_FormClosed);
             this.Load += new System.EventHandler(this.SimulationTable_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_simulationTable)).EndInit();
             this.ResumeLayout(false);

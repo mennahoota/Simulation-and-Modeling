@@ -34,5 +34,13 @@ namespace NewspaperSellerSimulation
             lbl_excessDemandNum.Text = Program.system.PerformanceMeasures.DaysWithMoreDemand.ToString();
             lbl_unsoldPapersNum.Text = Program.system.PerformanceMeasures.DaysWithUnsoldPapers.ToString();
         }
+
+        private void SimulationTable_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Form1 frm = new Form1();
+            this.Hide();
+            frm.ShowDialog();
+            this.Close();
+        }
     }
 }
