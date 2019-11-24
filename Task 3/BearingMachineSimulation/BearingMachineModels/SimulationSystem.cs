@@ -27,6 +27,11 @@ namespace BearingMachineModels
         public PerformanceMeasures ProposedPerformanceMeasures { get; set; }
         #endregion
 
+        #region TempData 
+        public List<TimeDistribution> tempDelayTimeDist;
+        public List<TimeDistribution> tempBearingLifeDist;
+        #endregion
+
         public SimulationSystem()
         {
             DelayTimeDistribution = new List<TimeDistribution>();
@@ -43,5 +48,23 @@ namespace BearingMachineModels
         {
             throw new NotImplementedException();
         }
+
+        public void InitializationDistributions()
+        {
+            //Fill Delay Time Distribution
+            tempDelayTimeDist = new List<TimeDistribution>();
+            tempDelayTimeDist = DelayTimeDistribution;
+            HelperFunctions.CalcCummulativeProbability(ref tempDelayTimeDist);
+            HelperFunctions.CalcRandomDigitAssignment(ref tempDelayTimeDist);
+            DelayTimeDistribution = tempDelayTimeDist;
+
+            //Fill Bearing life distribution
+            tempBearingLifeDist = new List<TimeDistribution>();
+            tempBearingLifeDist = BearingLifeDistribution;
+            HelperFunctions.CalcCummulativeProbability(ref tempBearingLifeDist);
+            HelperFunctions.CalcRandomDigitAssignment(ref tempBearingLifeDist);
+            BearingLifeDistribution = tempBearingLifeDist;
+        }
+
     }
 }
