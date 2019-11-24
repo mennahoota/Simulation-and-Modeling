@@ -8,99 +8,35 @@ namespace BearingMachineModels
 {
     public class HelperFunctions
     {
-        public static void ReadInput(string testCase, ref SimulationSystem simulationSystem)
+        public static void CalcCummulativeProbability(ref List<TimeDistribution> TimeDistributions)
         {
-            string projectPath = System.IO.Directory.GetCurrentDirectory();
-            projectPath = projectPath.Remove(projectPath.Length - 10);
-            string[] lines = System.IO.File.ReadAllLines(projectPath + "\\TestCases\\" + testCase + ".txt");
-            InputData(lines, ref simulationSystem);
-        }
-
-        public static void InputData(string[] lines, ref SimulationSystem simulationSystem)
-        {
-            int stringType = 0;
-            char[] delimiters = { ',', ' ' };
-            foreach (string line in lines)
+            for (int i = 0; i < TimeDistributions.Count(); i++)
             {
-                if (line == "\n" || line.Length == 0) continue;
-                switch (line)
+                if (i == 0)
+                    TimeDistributions[i].CummProbability = TimeDistributions[i].Probability;
+                else
                 {
-                    case "DowntimeCost":
-                        stringType = 1;
-                        continue;
-                    case "RepairPersonCost":
-                        stringType = 2;
-                        continue;
-                    case "BearingCost":
-                        stringType = 3;
-                        continue;
-                    case "NumberOfHours":
-                        stringType = 4;
-                        continue;
-                    case "NumberOfBearings":
-                        stringType = 5;
-                        continue;
-                    case "RepairTimeForOneBearing":
-                        stringType = 6;
-                        continue;
-                    case "RepairTimeForAllBearings":
-                        stringType = 7;
-                        continue;
-                    case "DelayTimeDistribution":
-                        stringType = 8;
-                        continue;
-                    case "BearingLifeDistribution":
-                        stringType = 9;
-                        continue;
+                    TimeDistributions[i].CummProbability = TimeDistributions[i - 1].CummProbability + TimeDistributions[i].Probability;
                 }
+            }
 
-                switch (stringType)
+        }
+        public static void CalcRandomDigitAssignment( ref List<TimeDistribution> TimeDistributions)
+        {
+            for (int i=0; i<TimeDistributions.Count(); i++)
+            {
+                if (i==0)
                 {
-                    case 1:
-                        simulationSystem.DowntimeCost = int.Parse(line);
-                        break;
-                    case 2:
-                        simulationSystem.RepairPersonCost = int.Parse(line);
-                        break;
-                    case 3:
-                        simulationSystem.BearingCost = int.Parse(line);
-                        break;
-                    case 4:
-                        simulationSystem.NumberOfHours = int.Parse(line);
-                        break;
-                    case 5:
-                        simulationSystem.NumberOfBearings = int.Parse(line);
-                        break;
-                    case 6:
-                        simulationSystem.RepairTimeForOneBearing = int.Parse(line);
-                        break;
-                    case 7:
-                        simulationSystem.RepairTimeForAllBearings = int.Parse(line);
-                        break;
-                    default:
-                        {
-                            string[] distributions = line.Split(delimiters);
-
-                            if (distributions.Length == 2)
-                            {
-                                TimeDistribution timeDistribution = new TimeDistribution();
-                                timeDistribution.Time = int.Parse(distributions[0]);
-                                timeDistribution.Probability = decimal.Parse(distributions[1]);
-
-                                switch (stringType)
-                                {
-                                    case 8:
-                                        simulationSystem.BearingLifeDistribution.Add(timeDistribution);
-                                        break;
-                                    case 9:
-                                        simulationSystem.DelayTimeDistribution.Add(timeDistribution);
-                                        break;
-                                }
-                            }
-                            break;
-                        }
+                    TimeDistributions[i].MinRange = 1;
+                    TimeDistributions[i].MaxRange = Decimal.ToInt32(TimeDistributions[i].CummProbability) * 100;
+                }
+                else
+                {
+                    TimeDistributions[i].MinRange = TimeDistributions[i - 1].MaxRange + 1;
+                    TimeDistributions[i].MaxRange = Decimal.ToInt32(TimeDistributions[i].CummProbability) * 100;
                 }
             }
         }
+
     }
 }

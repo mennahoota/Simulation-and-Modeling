@@ -8,25 +8,6 @@ namespace BearingMachineModels
 {
     public class SimulationSystem
     {
-        #region Inputs
-        public int DowntimeCost { get; set; }
-        public int RepairPersonCost { get; set; }
-        public int BearingCost { get; set; }
-        public int NumberOfHours { get; set; }
-        public int NumberOfBearings { get; set; }
-        public int RepairTimeForOneBearing { get; set; }
-        public int RepairTimeForAllBearings { get; set; }
-        public List<TimeDistribution> DelayTimeDistribution { get; set; }
-        public List<TimeDistribution> BearingLifeDistribution { get; set; }
-        #endregion
-
-        #region Outputs
-        public List<CurrentSimulationCase> CurrentSimulationTable { get; set; }
-        public PerformanceMeasures CurrentPerformanceMeasures { get; set; }
-        public List<ProposedSimulationCase> ProposedSimulationTable { get; set; }
-        public PerformanceMeasures ProposedPerformanceMeasures { get; set; }
-        #endregion
-
         public SimulationSystem()
         {
             DelayTimeDistribution = new List<TimeDistribution>();
@@ -38,10 +19,22 @@ namespace BearingMachineModels
             ProposedSimulationTable = new List<ProposedSimulationCase>();
             ProposedPerformanceMeasures = new PerformanceMeasures();
         }
+        
+        ///////////// INPUTS /////////////
+        public int DowntimeCost { get; set; }
+        public int RepairPersonCost { get; set; }
+        public int BearingCost { get; set; }
+        public int NumberOfHours { get; set; }
+        public int NumberOfBearings { get; set; }
+        public int RepairTimeForOneBearing { get; set; }
+        public int RepairTimeForAllBearings { get; set; }
+        public List<TimeDistribution> DelayTimeDistribution { get; set; }
+        public List<TimeDistribution> BearingLifeDistribution { get; set; }
 
-        public void Simulate()
-        {
-            throw new NotImplementedException();
-        }
+        ///////////// OUTPUTS /////////////
+        public List<CurrentSimulationCase> CurrentSimulationTable { get; set; }
+        public PerformanceMeasures CurrentPerformanceMeasures { get; set; }
+        public List<ProposedSimulationCase> ProposedSimulationTable { get; set; }
+        public PerformanceMeasures ProposedPerformanceMeasures { get; set; }
     }
 }
