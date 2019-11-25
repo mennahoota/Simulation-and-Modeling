@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BearingMachineTesting;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -25,6 +26,15 @@ namespace BearingMachineSimulation
         private void SimulationButton_Click(object sender, EventArgs e)
         {
             Program.simulationSystem.Simulate();
+
+            dataGridView1.DataSource = Program.simulationSystem.CurrentSimulationTable;
+            dataGridView2.DataSource = Program.simulationSystem.ProposedSimulationTable;
+
+            totalCurrentCost.Text = Program.simulationSystem.CurrentPerformanceMeasures.TotalCost.ToString();
+            totalProposedCost.Text = Program.simulationSystem.ProposedPerformanceMeasures.TotalCost.ToString();
+            
+            string result = TestingManager.Test(Program.simulationSystem, "TestCase1.txt");
+            MessageBox.Show(result);
         }
     }
 }

@@ -33,8 +33,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.SimulationButton = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.totalCurrentCost = new System.Windows.Forms.TextBox();
+            this.totalProposedCost = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.ExitButton = new System.Windows.Forms.Button();
@@ -93,19 +93,19 @@
             this.SimulationButton.UseVisualStyleBackColor = true;
             this.SimulationButton.Click += new System.EventHandler(this.SimulationButton_Click);
             // 
-            // textBox1
+            // totalCurrentCost
             // 
-            this.textBox1.Location = new System.Drawing.Point(203, 410);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(162, 20);
-            this.textBox1.TabIndex = 5;
+            this.totalCurrentCost.Location = new System.Drawing.Point(203, 410);
+            this.totalCurrentCost.Name = "totalCurrentCost";
+            this.totalCurrentCost.Size = new System.Drawing.Size(162, 20);
+            this.totalCurrentCost.TabIndex = 5;
             // 
-            // textBox2
+            // totalProposedCost
             // 
-            this.textBox2.Location = new System.Drawing.Point(581, 410);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(176, 20);
-            this.textBox2.TabIndex = 6;
+            this.totalProposedCost.Location = new System.Drawing.Point(581, 410);
+            this.totalProposedCost.Name = "totalProposedCost";
+            this.totalProposedCost.Size = new System.Drawing.Size(176, 20);
+            this.totalProposedCost.TabIndex = 6;
             // 
             // label3
             // 
@@ -151,8 +151,8 @@
             this.Controls.Add(this.ExitButton);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.totalProposedCost);
+            this.Controls.Add(this.totalCurrentCost);
             this.Controls.Add(this.SimulationButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -175,8 +175,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button SimulationButton;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox totalCurrentCost;
+        private System.Windows.Forms.TextBox totalProposedCost;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button ExitButton;

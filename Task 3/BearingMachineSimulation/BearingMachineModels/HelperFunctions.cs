@@ -8,6 +8,8 @@ namespace BearingMachineModels
 {
     public class HelperFunctions
     {
+        static Random rnd = new Random();
+
         public static void ReadInput(string testCase, ref SimulationSystem simulationSystem)
         {
             string projectPath = System.IO.Directory.GetCurrentDirectory();
@@ -81,19 +83,19 @@ namespace BearingMachineModels
                         {
                             string[] distributions = line.Split(delimiters);
 
-                            if (distributions.Length == 2)
+                            if (distributions.Length > 2)
                             {
                                 TimeDistribution timeDistribution = new TimeDistribution();
                                 timeDistribution.Time = int.Parse(distributions[0]);
-                                timeDistribution.Probability = decimal.Parse(distributions[1]);
+                                timeDistribution.Probability = decimal.Parse(distributions[2]);
 
                                 switch (stringType)
                                 {
                                     case 8:
-                                        simulationSystem.BearingLifeDistribution.Add(timeDistribution);
+                                        simulationSystem.DelayTimeDistribution.Add(timeDistribution);
                                         break;
                                     case 9:
-                                        simulationSystem.DelayTimeDistribution.Add(timeDistribution);
+                                        simulationSystem.BearingLifeDistribution.Add(timeDistribution);
                                         break;
                                 }
                             }
@@ -103,35 +105,71 @@ namespace BearingMachineModels
             }
         }
 
-        public static void CalcCummulativeProbability(ref List<TimeDistribution> TimeDistributions)
+        public static void CalcCummulativeProbability(ref List<TimeDistribution> timeDistributions)
         {
-            for (int i = 0; i < TimeDistributions.Count(); i++)
+            for (int i = 0; i < timeDistributions.Count(); i++)
             {
                 if (i == 0)
-                    TimeDistributions[i].CummProbability = TimeDistributions[i].Probability;
+                    timeDistributions[i].CummProbability = timeDistributions[i].Probability;
                 else
                 {
-                    TimeDistributions[i].CummProbability = TimeDistributions[i - 1].CummProbability + TimeDistributions[i].Probability;
+                    timeDistributions[i].CummProbability = timeDistributions[i - 1].CummProbability + timeDistributions[i].Probability;
                 }
             }
 
         }
 
-        public static void CalcRandomDigitAssignment(ref List<TimeDistribution> TimeDistributions)
+        public static void CalcRandomDigitAssignment(ref List<TimeDistribution> timeDistributions)
         {
-            for (int i = 0; i < TimeDistributions.Count(); i++)
+            for (int i = 0; i < timeDistributions.Count(); i++)
             {
                 if (i == 0)
                 {
-                    TimeDistributions[i].MinRange = 1;
-                    TimeDistributions[i].MaxRange = Decimal.ToInt32(TimeDistributions[i].CummProbability) * 100;
+                    timeDistributions[i].MinRange = 1;
+                    timeDistributions[i].MaxRange = Decimal.ToInt32(timeDistributions[i].CummProbability * 10);
                 }
                 else
                 {
-                    TimeDistributions[i].MinRange = TimeDistributions[i - 1].MaxRange + 1;
-                    TimeDistributions[i].MaxRange = Decimal.ToInt32(TimeDistributions[i].CummProbability) * 100;
+                    timeDistributions[i].MinRange = timeDistributions[i - 1].MaxRange + 1;
+                    timeDistributions[i].MaxRange = Decimal.ToInt32(timeDistributions[i].CummProbability * 10);
                 }
             }
+        }
+
+        public static int GenerateDelayRandomNumber()
+        {
+            return rnd.Next(1, 10);
+        }
+
+        public static int GenerateBearingRandomNumber()
+        {
+            return rnd.Next(1, 100);
+        }
+
+        public static Tuple<int, int> GetBearingRandomNumbers(string RandomNumberType, List<TimeDistribution> timeDistributions)
+        {
+            int randomNumber, time = 0;
+            switch(RandomNumberType)
+            {
+                case "Delay":
+                    randomNumber = GenerateDelayRandomNumber();
+                    break;  
+                default:
+                    randomNumber = GenerateBearingRandomNumber();
+                    break;
+            }
+
+            foreach (TimeDistribution timeDistribution in timeDistributions)
+            {
+                if (randomNumber >= timeDistribution.MinRange && randomNumber <= timeDistribution.MaxRange)
+                {
+                    time = timeDistribution.Time;
+                    break;
+                }
+            }
+
+            Tuple<int, int> bearingMinutes = new Tuple<int, int>(randomNumber, time);
+            return bearingMinutes;
         }
     }
 }
