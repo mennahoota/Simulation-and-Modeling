@@ -119,31 +119,31 @@ namespace BearingMachineModels
 
         }
 
-        public static void CalcRandomDigitAssignment(ref List<TimeDistribution> timeDistributions)
+        public static void CalcRandomDigitAssignment(ref List<TimeDistribution> timeDistributions, int factor)
         {
             for (int i = 0; i < timeDistributions.Count(); i++)
             {
                 if (i == 0)
                 {
                     timeDistributions[i].MinRange = 1;
-                    timeDistributions[i].MaxRange = Decimal.ToInt32(timeDistributions[i].CummProbability * 10);
+                    timeDistributions[i].MaxRange = Decimal.ToInt32(timeDistributions[i].CummProbability * factor);
                 }
                 else
                 {
                     timeDistributions[i].MinRange = timeDistributions[i - 1].MaxRange + 1;
-                    timeDistributions[i].MaxRange = Decimal.ToInt32(timeDistributions[i].CummProbability * 10);
+                    timeDistributions[i].MaxRange = Decimal.ToInt32(timeDistributions[i].CummProbability * factor);
                 }
             }
         }
 
         public static int GenerateDelayRandomNumber()
         {
-            return rnd.Next(1, 10);
+            return rnd.Next(1, 101);
         }
 
         public static int GenerateBearingRandomNumber()
         {
-            return rnd.Next(1, 100);
+            return rnd.Next(1, 101);
         }
 
         public static Tuple<int, int> GetBearingRandomNumbers(string RandomNumberType, List<TimeDistribution> timeDistributions)

@@ -32,8 +32,18 @@ namespace BearingMachineSimulation
 
             totalCurrentCost.Text = Program.simulationSystem.CurrentPerformanceMeasures.TotalCost.ToString();
             totalProposedCost.Text = Program.simulationSystem.ProposedPerformanceMeasures.TotalCost.ToString();
-            
-            string result = TestingManager.Test(Program.simulationSystem, "TestCase1.txt");
+
+            CurrentBearingCostTxt.Text = Program.simulationSystem.CurrentPerformanceMeasures.BearingCost.ToString();
+            CurrentDowntimeTxt.Text = Program.simulationSystem.CurrentPerformanceMeasures.DowntimeCost.ToString();
+            CurrentRepairPersonTxt.Text = Program.simulationSystem.CurrentPerformanceMeasures.RepairPersonCost.ToString();
+            CurrentDelayCostTxt.Text = Program.simulationSystem.CurrentPerformanceMeasures.DelayCost.ToString();
+
+            PropBearingTxt.Text = Program.simulationSystem.ProposedPerformanceMeasures.BearingCost.ToString();
+            PropDowntimeTxt.Text = Program.simulationSystem.ProposedPerformanceMeasures.DowntimeCost.ToString();
+            PropDelayTxt.Text = Program.simulationSystem.ProposedPerformanceMeasures.DelayCost.ToString();
+            PropRepairTxt.Text = Program.simulationSystem.ProposedPerformanceMeasures.RepairPersonCost.ToString();
+
+            string result = TestingManager.Test(Program.simulationSystem, "TestCase3.txt");
             MessageBox.Show(result);
         }
     }

@@ -34,6 +34,7 @@ namespace BearingMachineModels
         int totalCurrentDelayTime;
         int totalProposedDelayTime;
         int TotalProposedBearings = 0;
+        int proposedBearingsSet = 0;
         public List<int> bearingMaximumChanges = new List<int>();
         #endregion
 
@@ -68,14 +69,14 @@ namespace BearingMachineModels
             tempDelayTimeDist = new List<TimeDistribution>();
             tempDelayTimeDist = DelayTimeDistribution;
             HelperFunctions.CalcCummulativeProbability(ref tempDelayTimeDist);
-            HelperFunctions.CalcRandomDigitAssignment(ref tempDelayTimeDist);
+            HelperFunctions.CalcRandomDigitAssignment(ref tempDelayTimeDist, 100);
             DelayTimeDistribution = tempDelayTimeDist;
 
             //Fill Bearing life distribution
             tempBearingLifeDist = new List<TimeDistribution>();
             tempBearingLifeDist = BearingLifeDistribution;
             HelperFunctions.CalcCummulativeProbability(ref tempBearingLifeDist);
-            HelperFunctions.CalcRandomDigitAssignment(ref tempBearingLifeDist);
+            HelperFunctions.CalcRandomDigitAssignment(ref tempBearingLifeDist, 100);
             BearingLifeDistribution = tempBearingLifeDist;
         }
 
@@ -112,10 +113,10 @@ namespace BearingMachineModels
                     currentBearings.Add(bearing);
                 }
 
-                proposedSimulationCase.AccumulatedHours += proposedSimulationCase.FirstFailure;
                 proposedSimulationCase.Bearings = currentBearings;
 
                 TotalProposedBearings += currentBearings.Count;
+                proposedBearingsSet += 1;
 
                 Tuple<int, int> delayVariables = HelperFunctions.GetBearingRandomNumbers("Delay", DelayTimeDistribution);
 
@@ -125,6 +126,8 @@ namespace BearingMachineModels
                 totalProposedDelayTime += proposedSimulationCase.Delay;
 
                 totalAccumlatedHours += proposedSimulationCase.FirstFailure;
+                proposedSimulationCase.AccumulatedHours = totalAccumlatedHours;
+
                 ProposedSimulationTable.Add(proposedSimulationCase);
                 row++;
             }
@@ -179,8 +182,8 @@ namespace BearingMachineModels
         {
             ProposedPerformanceMeasures.CalculateBearingCost(TotalProposedBearings, BearingCost);
             ProposedPerformanceMeasures.CalculateDelayCost(totalProposedDelayTime, DowntimeCost);
-            ProposedPerformanceMeasures.CalculateDowntimeCost(TotalProposedBearings, RepairTimeForAllBearings, DowntimeCost);
-            ProposedPerformanceMeasures.CalculateRepairPersonCost(TotalProposedBearings, RepairTimeForAllBearings, RepairPersonCost);
+            ProposedPerformanceMeasures.CalculateDowntimeCost(proposedBearingsSet, RepairTimeForAllBearings, DowntimeCost);
+            ProposedPerformanceMeasures.CalculateRepairPersonCost(proposedBearingsSet, RepairTimeForAllBearings, RepairPersonCost);
             ProposedPerformanceMeasures.CalculateTotalCost();
         }
 
